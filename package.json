@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "description": "Unofficial redesign concept of csttraining.co.uk, built by Ahmed Bader as part of a Junior Frontend Developer application.",
+  "homepage": "https://cst-training-concept-by-ahmed.vercel.app",
   "author": "Ahmed Bader",
   "license": "UNLICENSED",
   "engines": {

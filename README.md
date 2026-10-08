@@ -1,5 +1,7 @@
 # CST Training: redesign concept
 
+**Live: [cst-training-concept-by-ahmed.vercel.app](https://cst-training-concept-by-ahmed.vercel.app)**
+
 An **unofficial** redesign of [csttraining.co.uk](https://www.csttraining.co.uk), built by Ahmed Bader as part of an application for CST Training's Junior Frontend Developer role. It isn't affiliated with CST Training, it's hidden from search engines, and nothing typed into it is sent anywhere.
 
 Course names, prices, durations, NVQs, venues and funding rules come from the current site (October 2026). The Compliance Control dashboard uses a made-up company.
