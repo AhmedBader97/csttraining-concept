@@ -1,0 +1,30 @@
+// ============================================================
+// CST Training concept: stylesheet entry
+//
+//   abstracts/   tokens, functions, mixins (no CSS output)
+//   base/        custom properties, reset, typography, globals
+//   layout/      container, sections, page heads
+//   components/  one partial per BEM block family
+//
+// Naming: BEM (block, block__element, block--modifier).
+// No utility framework; components own their styles.
+// ============================================================
+
+@use 'base/root';
+@use 'base/reset';
+@use 'base/typography';
+@use 'base/global';
+
+@use 'layout/layout';
+
+@use 'components/button';
+@use 'components/chrome';
+@use 'components/hero';
+@use 'components/planner';
+@use 'components/courses';
+@use 'components/home';
+@use 'components/forms';
+@use 'components/catalogue';
+@use 'components/dashboard';
+@use 'components/basket';
+@use 'components/concept';

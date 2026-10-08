@@ -1,0 +1,79 @@
+@use '../abstracts' as *;
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0.7rem 1.35rem;
+  border: 2px solid transparent;
+  border-radius: $radius-control;
+  font-weight: 650;
+  font-size: rem(17);
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color $duration-quick ease,
+    border-color $duration-quick ease,
+    transform $duration-quick ease;
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled,
+  &[aria-disabled='true'] {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.button--primary {
+  background: color('signal');
+  color: color('ink');
+
+  &:hover {
+    background: color('signal-strong');
+    text-decoration: none;
+  }
+}
+
+.button--secondary {
+  background: transparent;
+  border-color: currentColor;
+  color: inherit;
+
+  &:hover {
+    background: color('concrete');
+    text-decoration: none;
+  }
+
+  .section--ink &:hover {
+    background: color('ink-raised');
+  }
+}
+
+.button--quiet {
+  min-height: 40px;
+  padding: 0.4rem 0.8rem;
+  background: transparent;
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+
+  &:hover {
+    text-decoration-color: color('signal');
+  }
+}
+
+.button--small {
+  min-height: 40px;
+  padding: 0.45rem 0.9rem;
+  font-size: rem(15);
+}
+
+.button--block {
+  width: 100%;
+}

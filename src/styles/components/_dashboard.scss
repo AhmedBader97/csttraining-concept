@@ -1,0 +1,451 @@
+@use '../abstracts' as *;
+
+.dashboard {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.dashboard__message {
+  padding: 2rem;
+  background: #fff;
+  border-radius: $radius-panel;
+  font-weight: 600;
+}
+
+.dashboard__company {
+  font-size: rem(15);
+  color: color('steel');
+}
+
+.dashboard__pair {
+  display: grid;
+  gap: 1.5rem;
+
+  @include mq('lg') {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+// ---------- status board ----------
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: color('line');
+  border: 1px solid color('line');
+
+  @include mq('md') {
+    grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  }
+}
+
+.board__item {
+  padding: 1rem;
+
+  @include mq('md') {
+    padding: 1.25rem 1.4rem;
+  }
+
+  background: #fff;
+  border-top: 5px solid color('line');
+}
+
+.board__item--lead {
+  grid-column: 1 / -1;
+  border-top-color: color('valid');
+
+  @include mq('md') {
+    grid-column: auto;
+  }
+}
+
+.board__item--expired {
+  border-top-color: color('expired');
+
+  .board__value {
+    color: color('expired');
+  }
+}
+
+.board__item--due {
+  border-top-color: color('card-gold');
+
+  .board__value {
+    color: color('due');
+  }
+}
+
+.board__value {
+  @include display(800);
+  font-size: clamp(rem(40), 5vw, rem(60));
+  line-height: 1;
+}
+
+.board__label {
+  margin-top: 0.35rem;
+  color: color('steel');
+  font-weight: 600;
+}
+
+.board__meter {
+  height: 8px;
+  margin-top: 0.9rem;
+  border-radius: 4px;
+  background: color('concrete-strong');
+  overflow: hidden;
+
+  span {
+    display: block;
+    height: 100%;
+    background: color('valid');
+  }
+}
+
+// ---------- panels ----------
+.panel {
+  padding: clamp(1.1rem, 2.5vw, 1.75rem);
+  border-radius: $radius-panel;
+  background: #fff;
+  border: 1px solid color('line');
+}
+
+.panel__head {
+  margin-bottom: 1rem;
+
+  h2 {
+    font-size: rem(30);
+  }
+
+  p {
+    margin-top: 0.3rem;
+    color: color('steel');
+  }
+}
+
+.panel__foot {
+  margin-top: 1rem;
+  font-weight: 650;
+}
+
+.table-scroll {
+  // Contains visually hidden labels in the table, which would otherwise widen the page.
+  position: relative;
+  overflow-x: auto;
+  margin-inline: calc(clamp(1.1rem, 2.5vw, 1.75rem) * -1);
+  padding-inline: clamp(1.1rem, 2.5vw, 1.75rem);
+}
+
+.data-table {
+  width: 100%;
+  min-width: 42rem;
+  font-size: rem(16);
+
+  th,
+  td {
+    padding: 0.65rem 0.75rem 0.65rem 0;
+    border-bottom: 1px solid color('line');
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  thead th {
+    font-size: rem(14);
+    font-weight: 600;
+    color: color('steel');
+  }
+
+  tbody th {
+    font-weight: 650;
+  }
+
+  td:last-child {
+    text-align: right;
+    white-space: nowrap;
+  }
+}
+
+// Phones: each row becomes a block, with the action button full width.
+@include mq-below('md') {
+  .table-scroll {
+    overflow-x: visible;
+  }
+
+  .data-table {
+    min-width: 0;
+
+    thead {
+      @include visually-hidden;
+    }
+
+    tr {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.2rem 0.75rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid color('line');
+    }
+
+    th,
+    td {
+      padding: 0;
+      border: 0;
+      grid-column: 1 / -1;
+    }
+
+    // Name and status share the first line.
+    tbody th {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .data-table__status {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    td[data-label]::before {
+      content: attr(data-label) ': ';
+      color: color('steel');
+    }
+
+    td:last-child {
+      grid-column: 1 / -1;
+      margin-top: 0.4rem;
+      text-align: left;
+
+      .button {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.data-table__note {
+  font-size: rem(14);
+  color: color('steel');
+}
+
+.status {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: rem(14);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status--expired {
+  background: #fde8e6;
+  color: color('expired');
+}
+
+.status--due {
+  background: color('due-bg');
+  color: color('due');
+}
+
+.status--valid {
+  background: #e3f4ea;
+  color: color('valid');
+}
+
+// ---------- forecast ----------
+.forecast {
+  position: relative;
+  margin: 0;
+}
+
+.forecast__chart {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 6px;
+  height: 200px;
+  padding-top: 1.4rem;
+  border-bottom: 1px solid color('line');
+  background: repeating-linear-gradient(to top, transparent 0 49px, color('concrete-strong') 49px 50px);
+}
+
+.forecast__col {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-width: 0;
+}
+
+.forecast__track {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.forecast__bar {
+  width: 72%;
+  min-height: 0;
+  border-radius: 3px 3px 0 0;
+  background: color('ink');
+
+  .forecast__col--soon & {
+    background: color('signal');
+  }
+}
+
+.forecast__value {
+  margin-bottom: 0.15rem;
+  font-size: rem(14);
+  font-weight: 750;
+}
+
+.forecast__label {
+  margin-top: 0.4rem;
+  font-size: rem(12);
+  color: color('steel');
+  text-align: center;
+  white-space: nowrap;
+
+  // Every other month on phones, so the labels don't collide.
+  @include mq-below('md') {
+    .forecast__col:nth-child(even) & {
+      visibility: hidden;
+    }
+  }
+}
+
+.forecast__caption {
+  margin-top: 1.4rem;
+  font-size: rem(14);
+  color: color('steel');
+}
+
+// ---------- by site ----------
+.site-bars {
+  display: grid;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.site-bars__name {
+  font-weight: 700;
+
+  span {
+    font-weight: 500;
+    color: color('steel');
+  }
+}
+
+.site-bars__bar {
+  display: flex;
+  height: 14px;
+  margin-top: 0.35rem;
+  border-radius: 3px;
+  overflow: hidden;
+  background: color('concrete');
+}
+
+.site-bars__seg--expired {
+  background: color('expired');
+}
+
+.site-bars__seg--due {
+  background: color('card-gold');
+}
+
+.site-bars__seg--valid {
+  background: color('valid');
+}
+
+.site-bars__counts {
+  margin-top: 0.25rem;
+  font-size: rem(14);
+  color: color('steel');
+}
+
+// ---------- data checks ----------
+.checks {
+  display: grid;
+  gap: 1.25rem;
+
+  @include mq('md') {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.check {
+  padding-top: 0.9rem;
+  border-top: 3px solid color('card-gold');
+
+  ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.1rem;
+  }
+
+  p {
+    margin-top: 0.5rem;
+  }
+}
+
+.check__title {
+  font-size: rem(22);
+}
+
+// ---------- import ----------
+.import {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+
+  label.button {
+    cursor: pointer;
+  }
+
+  input[type='file']:focus-visible + .button,
+  label.button:has(+ input:focus-visible) {
+    @include focus-ring;
+  }
+}
+
+.import__download {
+  font-weight: 600;
+}
+
+.import__result {
+  margin-top: 1rem;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid color('ink');
+  background: color('concrete');
+  font-weight: 600;
+}
+
+.import__problems {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+  font-weight: 500;
+  color: color('expired');
+}
+
+// ---------- SQL reveal ----------
+.show-sql {
+  margin-top: 0.9rem;
+}
+
+.show-sql__summary {
+  width: fit-content;
+  font-size: rem(15);
+  font-weight: 650;
+  cursor: pointer;
+  color: color('steel');
+}
+
+.show-sql__code {
+  margin: 0.6rem 0 0;
+  padding: 1rem;
+  border-radius: $radius-panel;
+  background: color('ink');
+  color: #e8edf3;
+  font-size: rem(13);
+  line-height: 1.5;
+  overflow-x: auto;
+}

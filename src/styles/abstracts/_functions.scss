@@ -1,0 +1,14 @@
+@use 'sass:map';
+@use 'tokens' as *;
+
+/// Reads a colour through its custom property, so themed sections can override it.
+@function color($name) {
+  @if not map.has-key($colors, $name) {
+    @error 'Unknown colour `#{$name}`.';
+  }
+  @return var(--c-#{$name});
+}
+
+@function rem($px) {
+  @return calc($px / 16) * 1rem;
+}

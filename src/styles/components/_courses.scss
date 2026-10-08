@@ -1,0 +1,186 @@
+@use '../abstracts' as *;
+
+// ---------- the ledger: courses as rows, like a price list on a site office wall ----------
+.course-ledger {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  border-top: 2px solid color('ink');
+}
+
+.course-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.35rem 1.5rem;
+  padding: 1.1rem 0.25rem;
+  border-bottom: 1px solid color('line');
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  @include mq('md') {
+    grid-template-columns: minmax(0, 1fr) 9rem 12rem 10rem;
+    align-items: center;
+    padding-inline: 0.75rem;
+  }
+}
+
+.course-row__main {
+  grid-column: 1 / -1;
+
+  @include mq('md') {
+    grid-column: auto;
+  }
+}
+
+.course-row__name {
+  font-size: rem(25);
+}
+
+.course-row__link {
+  text-decoration: none;
+
+  // The whole row is the link.
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  &:focus-visible {
+    outline: none;
+
+    &::after {
+      @include focus-ring(-3px);
+    }
+  }
+}
+
+.course-row:hover .course-row__link {
+  text-decoration: underline;
+  text-decoration-color: color('signal');
+  text-decoration-thickness: 2px;
+}
+
+.course-row__title {
+  margin-top: 0.15rem;
+  color: color('steel');
+  font-size: rem(16);
+}
+
+.course-row__duration {
+  font-weight: 600;
+}
+
+.course-row__delivery {
+  grid-column: 1 / 2;
+
+  @include mq('md') {
+    grid-column: auto;
+  }
+}
+
+.course-row__price {
+  grid-row: 2;
+  grid-column: 2;
+  text-align: right;
+
+  @include mq('md') {
+    grid-row: auto;
+    grid-column: auto;
+  }
+}
+
+// ---------- price ----------
+.price {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.15;
+}
+
+.price__amount {
+  @include display(780);
+  font-size: rem(26);
+  white-space: nowrap;
+}
+
+.price--large .price__amount {
+  font-size: clamp(rem(40), 5vw, rem(56));
+}
+
+.price__plus {
+  font-size: 0.6em;
+  font-weight: 600;
+}
+
+.price__from {
+  font-size: 0.6em;
+  font-weight: 600;
+}
+
+.price__was {
+  font-size: rem(15);
+  color: color('steel');
+}
+
+.price__vat {
+  font-size: rem(14);
+  color: color('steel');
+}
+
+.price--request .price__amount {
+  font-size: rem(19);
+}
+
+// ---------- delivery and card chips ----------
+.delivery-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.delivery-list__item {
+  padding: 0.15rem 0.55rem;
+  border: 1px solid color('line');
+  border-radius: 999px;
+  background: #fff;
+  font-size: rem(14);
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+.card-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-weight: 600;
+}
+
+.card-chip__swatch {
+  width: 1.5rem;
+  height: 1rem;
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.card-chip--green .card-chip__swatch {
+  background: color('card-green');
+}
+
+.card-chip--blue .card-chip__swatch {
+  background: color('card-blue');
+}
+
+.card-chip--gold .card-chip__swatch {
+  background: color('card-gold');
+}
+
+.card-chip--black .card-chip__swatch {
+  background: color('card-black');
+}

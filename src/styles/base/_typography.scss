@@ -1,0 +1,62 @@
+@use '../abstracts' as *;
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: $font-sans;
+  font-size: rem(17);
+  line-height: 1.55;
+  color: color('ink');
+  background: color('paper');
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @include display;
+  line-height: 1.05;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(rem(42), 6.2vw, rem(76));
+}
+
+h2 {
+  font-size: clamp(rem(32), 4vw, rem(46));
+}
+
+h3 {
+  font-size: rem(24);
+  line-height: 1.15;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+
+  &:hover {
+    text-decoration-color: color('signal');
+    text-decoration-thickness: 2px;
+  }
+}
+
+code,
+pre {
+  font-family: $font-mono;
+  font-size: 0.9em;
+}
+
+strong {
+  font-weight: 650;
+}

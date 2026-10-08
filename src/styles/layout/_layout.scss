@@ -1,0 +1,151 @@
+@use 'sass:map';
+@use '../abstracts' as *;
+
+.container {
+  width: 100%;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: 16px;
+
+  @include mq('md') {
+    padding-inline: 32px;
+  }
+}
+
+.section {
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+
+.section--concrete {
+  background: color('concrete');
+}
+
+.section--ink {
+  --c-steel: #{map.get($colors, 'ink-soft')};
+  --c-line: #{map.get($colors, 'ink-raised')};
+  background: color('ink');
+  color: #fff;
+
+  a {
+    color: #fff;
+  }
+}
+
+.section__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.section__title {
+  max-width: 22ch;
+}
+
+.section__lede {
+  max-width: 60ch;
+  margin-top: 1rem;
+  color: color('steel');
+  font-size: rem(19);
+}
+
+.section__more {
+  font-weight: 600;
+}
+
+.split {
+  display: grid;
+  gap: 2.5rem;
+
+  @include mq('lg') {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 4rem;
+    align-items: start;
+  }
+}
+
+.page-head {
+  padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2rem, 4vw, 3rem);
+  border-bottom: 1px solid color('line');
+}
+
+.page-head__title {
+  max-width: 18ch;
+}
+
+.page-head__lede {
+  max-width: 62ch;
+  margin-top: 1rem;
+  font-size: rem(19);
+  color: color('steel');
+}
+
+.breadcrumbs {
+  margin-bottom: 1rem;
+  font-size: rem(15);
+  color: color('steel');
+
+  ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  li:not(:last-child)::after {
+    content: '/';
+    margin-left: 0.5rem;
+    color: color('line');
+  }
+}
+
+.prose {
+  max-width: 66ch;
+
+  > * + * {
+    margin-top: 1rem;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.25rem;
+  }
+
+  li + li {
+    margin-top: 0.4rem;
+  }
+}
+
+// Single-column grids on phones: an implicit `auto` column grows to fit its
+// widest child (a table, a long file path), so pin it to the screen instead.
+// Components set their own columns at larger sizes, later in the cascade.
+.hero__grid,
+.cards-page,
+.dashboard,
+.dashboard__pair,
+.board,
+.checks,
+.advert,
+.advert__item,
+.split,
+.catalogue,
+.course-body,
+.basket,
+.placed,
+.funding,
+.contact,
+.venues-strip,
+.employer-grid,
+.site-footer__grid,
+.nvq-finder__controls,
+.nvq-groups,
+.flow,
+.spotted,
+.playground,
+.trade-list {
+  grid-template-columns: minmax(0, 1fr);
+}

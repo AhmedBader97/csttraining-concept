@@ -1,0 +1,158 @@
+@use '../abstracts' as *;
+
+.advert {
+  display: grid;
+  padding: 0;
+  margin: 2rem 0 0;
+  list-style: none;
+  border-top: 2px solid color('ink');
+}
+
+.advert__item {
+  display: grid;
+  gap: 0.5rem 3rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid color('line');
+
+  @include mq('lg') {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  }
+}
+
+.advert__line {
+  font-size: rem(24);
+
+  @include mq('lg') {
+    grid-row: span 2;
+  }
+}
+
+.advert__built {
+  max-width: 62ch;
+}
+
+.advert__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  font-weight: 650;
+}
+
+.advert__file {
+  overflow-wrap: anywhere;
+  font-family: $font-mono;
+  font-size: rem(13);
+  font-weight: 500;
+  color: color('steel');
+}
+
+.playground {
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: $radius-panel;
+  background: #fff;
+  border: 1px solid color('line');
+
+  .button {
+    justify-self: start;
+  }
+}
+
+.playground__presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.playground__request {
+  font-family: $font-mono;
+  font-size: rem(14);
+}
+
+.playground__body {
+  font-family: $font-mono;
+  font-size: rem(13);
+}
+
+.playground__status {
+  font-weight: 700;
+}
+
+.flow {
+  display: grid;
+  gap: 0.75rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: flow;
+
+  @include mq('lg') {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 2.25rem;
+  }
+}
+
+.flow__step {
+  position: relative;
+  display: grid;
+  gap: 0.25rem;
+  padding: 1.1rem;
+  border: 2px solid color('ink');
+  border-radius: $radius-panel;
+
+  // An arrow to the next system.
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -0.75rem;
+    width: 2px;
+    height: 0.75rem;
+    background: color('ink');
+
+    @include mq('lg') {
+      left: auto;
+      right: -2.25rem;
+      top: 50%;
+      bottom: auto;
+      width: 2.25rem;
+      height: 2px;
+    }
+  }
+}
+
+.flow__name {
+  @include display(780);
+  font-size: rem(24);
+}
+
+.flow__what {
+  font-size: rem(15);
+  color: color('steel');
+}
+
+.spotted {
+  display: grid;
+  gap: 1.5rem;
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  @include mq('md') {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.spotted__item {
+  padding-top: 1rem;
+  border-top: 3px solid color('card-gold');
+
+  p {
+    margin-top: 0.5rem;
+  }
+}
+
+.spotted__title {
+  font-size: rem(22);
+}

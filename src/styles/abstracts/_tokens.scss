@@ -1,0 +1,56 @@
+// ============================================================
+// Design tokens. Colours are emitted as CSS custom properties
+// in base/_root.scss so sections can re-theme their contents.
+//
+// The palette comes from a building site: navy for the brand,
+// hi-vis orange for actions, concrete greys for surfaces, and
+// the four CSCS card colours, used only where they mean a card.
+// ============================================================
+
+$colors: (
+  'ink': #0e2238,            // brand navy: text, dark sections (16:1 on white)
+  'ink-raised': #18324f,     // panels on ink
+  'ink-soft': #c9d3df,       // secondary text on ink (10.6:1)
+  'paper': #ffffff,
+  'concrete': #eef1f4,       // alternate sections
+  'concrete-strong': #dce2e8,
+  'line': #cdd5de,           // hairlines on light
+  'steel': #4a5a6b,          // secondary text (7:1 on white, 6.3:1 on concrete)
+  'signal': #ff6b2c,         // hi-vis orange: buttons (navy text on it, 5.7:1) and focus
+  'signal-strong': #e2551a,
+  'signal-text': #b8461a,    // orange as text on white (5.3:1)
+  'card-green': #1f7a45,
+  'card-blue': #1e5aa8,
+  'card-gold': #c8961a,
+  'card-black': #17191d,
+  'expired': #b42318,
+  'due': #9a5b00,
+  'due-bg': #fdf1d6,
+  'valid': #18794e,
+);
+
+$font-sans: var(--font-archivo), 'Arial Narrow', ui-sans-serif, system-ui, sans-serif;
+$font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+
+// Width axis of Archivo: signage-condensed for headings and figures.
+$stretch-condensed: 72%;
+$stretch-semi: 88%;
+
+$breakpoints: (
+  'sm': 480px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1280px,
+);
+
+$container-max: 1200px;
+
+// Radii follow what things are: cards are cards (rounded like the real thing),
+// controls are slightly rounded, panels are square-ish.
+$radius-card: 12px;
+$radius-control: 6px;
+$radius-panel: 4px;
+
+$ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+$duration-quick: 160ms;
+$duration-base: 260ms;

@@ -1,0 +1,99 @@
+{
+  "name": "CST booking to HubSpot (concept)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cst-booking",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "4b9f5a2e-0001-4c1a-9e1a-booking00001",
+      "name": "Booking received",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hubapi.com/crm/v3/objects/contacts/batch/upsert",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "hubspotAppToken",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { inputs: [{ idProperty: 'email', id: $json.body.customer.email, properties: { email: $json.body.customer.email, firstname: $json.body.customer.first_name, lastname: $json.body.customer.last_name, phone: $json.body.customer.phone, company: $json.body.customer.company, lifecyclestage: 'opportunity' } }] } }}",
+        "options": {}
+      },
+      "id": "4b9f5a2e-0002-4c1a-9e1a-booking00002",
+      "name": "Upsert HubSpot contact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hubapi.com/crm/v3/objects/deals",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "hubspotAppToken",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { properties: { dealname: 'Booking ' + $('Booking received').item.json.body.order_id + ': ' + ($('Booking received').item.json.body.customer.company || $('Booking received').item.json.body.customer.last_name), pipeline: 'course_bookings', dealstage: 'booking_received', amount: $('Booking received').item.json.body.totals.net, places: String($('Booking received').item.json.body.totals.places) }, associations: [{ to: { id: $json.results[0].id }, types: [{ associationCategory: 'HUBSPOT_DEFINED', associationTypeId: 3 }] }] } }}",
+        "options": {}
+      },
+      "id": "4b9f5a2e-0003-4c1a-9e1a-booking00003",
+      "name": "Create HubSpot deal",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [720, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "typeValidation": "strict" },
+          "conditions": [
+            {
+              "leftValue": "={{ $('Booking received').item.json.body.bulk_booking }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true", "singleValue": true }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4b9f5a2e-0004-4c1a-9e1a-booking00004",
+      "name": "5 or more places?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [960, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.hubapi.com/crm/v3/objects/tasks",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "hubspotAppToken",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { properties: { hs_task_subject: 'Call about bulk discount', hs_task_body: 'Booking with ' + $('Booking received').item.json.body.totals.places + ' places', hs_timestamp: new Date().toISOString(), hs_task_priority: 'HIGH' } } }}",
+        "options": {}
+      },
+      "id": "4b9f5a2e-0005-4c1a-9e1a-booking00005",
+      "name": "Task for a coordinator",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1200, 200]
+    }
+  ],
+  "connections": {
+    "Booking received": { "main": [[{ "node": "Upsert HubSpot contact", "type": "main", "index": 0 }]] },
+    "Upsert HubSpot contact": { "main": [[{ "node": "Create HubSpot deal", "type": "main", "index": 0 }]] },
+    "Create HubSpot deal": { "main": [[{ "node": "5 or more places?", "type": "main", "index": 0 }]] },
+    "5 or more places?": { "main": [[{ "node": "Task for a coordinator", "type": "main", "index": 0 }], []] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "pinData": {}
+}

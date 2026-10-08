@@ -1,0 +1,325 @@
+@use '../abstracts' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.field__label {
+  font-weight: 650;
+}
+
+.field__input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0.55rem 0.8rem;
+  border: 2px solid color('steel');
+  border-radius: $radius-control;
+  background: #fff;
+  font-size: rem(17);
+
+  &:focus-visible {
+    border-color: color('ink');
+  }
+
+  &:disabled {
+    background: color('concrete');
+  }
+}
+
+textarea.field__input {
+  min-height: 6rem;
+  resize: vertical;
+}
+
+select.field__input {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position:
+    calc(100% - 20px) 55%,
+    calc(100% - 14px) 55%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+.field__hint {
+  font-size: rem(14);
+  color: color('steel');
+}
+
+.field__hint--good {
+  color: color('valid');
+  font-weight: 600;
+}
+
+.field__error {
+  color: color('expired');
+  font-weight: 650;
+  font-size: rem(15);
+}
+
+.field--error .field__input {
+  border-color: color('expired');
+  border-width: 3px;
+}
+
+.checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  cursor: pointer;
+
+  input {
+    width: 1.3rem;
+    height: 1.3rem;
+    margin-top: 0.15rem;
+    accent-color: color('ink');
+  }
+}
+
+// ---------- filter chips (radio and checkbox) ----------
+.filter-group {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.filter-group__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.filter-chip {
+  position: relative;
+  display: inline-flex;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+  }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 0.35rem 0.85rem;
+    border: 1px solid color('line');
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 600;
+    font-size: rem(15);
+    cursor: pointer;
+  }
+
+  input:checked + span {
+    background: color('ink');
+    border-color: color('ink');
+    color: #fff;
+  }
+
+  input:focus-visible + span {
+    @include focus-ring(2px);
+  }
+}
+
+.filter-chip--button {
+  min-height: 40px;
+  padding: 0.35rem 0.85rem;
+  border: 1px solid color('line');
+  border-radius: 999px;
+  background: #fff;
+  font-weight: 600;
+  font-size: rem(15);
+
+  &[aria-pressed='true'] {
+    background: color('ink');
+    border-color: color('ink');
+    color: #fff;
+  }
+}
+
+// ---------- segmented control ----------
+.segmented {
+  display: flex;
+  margin-top: 0.4rem;
+  border: 2px solid color('ink');
+  border-radius: $radius-control;
+  overflow: hidden;
+}
+
+.segmented__option {
+  position: relative;
+  flex: 1;
+
+  input {
+    position: absolute;
+    opacity: 0;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.4rem;
+    font-weight: 650;
+    cursor: pointer;
+  }
+
+  & + & span {
+    border-left: 2px solid color('ink');
+  }
+
+  input:checked + span {
+    background: color('ink');
+    color: #fff;
+  }
+
+  input:focus-visible + span {
+    outline: 3px solid color('signal');
+    outline-offset: -5px;
+  }
+}
+
+// ---------- number stepper ----------
+.stepper {
+  display: flex;
+  width: fit-content;
+  border: 2px solid color('steel');
+  border-radius: $radius-control;
+  overflow: hidden;
+}
+
+.stepper__button {
+  width: 48px;
+  min-height: 48px;
+  border: 0;
+  background: color('concrete');
+  font-size: rem(22);
+  font-weight: 700;
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.stepper__input {
+  width: 4rem;
+  border: 0;
+  text-align: center;
+  font-weight: 700;
+  font-size: rem(18);
+  -moz-appearance: textfield;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+// ---------- empty states and errors ----------
+.empty-state {
+  padding: 2rem;
+  border: 2px dashed color('line');
+  border-radius: $radius-panel;
+
+  .button {
+    margin-top: 1rem;
+  }
+}
+
+.empty-state--large {
+  max-width: 40rem;
+
+  h2 {
+    font-size: rem(32);
+  }
+
+  p {
+    margin-top: 0.5rem;
+    color: color('steel');
+  }
+}
+
+.empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.error-summary {
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 3px solid color('expired');
+  border-radius: $radius-panel;
+
+  &[hidden] {
+    display: none;
+  }
+
+  h3 {
+    font-size: rem(21);
+    color: color('expired');
+  }
+
+  ul {
+    margin: 0.5rem 0 0;
+    padding-left: 1.2rem;
+  }
+
+  a {
+    color: color('expired');
+    font-weight: 650;
+  }
+}
+
+.ticks {
+  padding: 0;
+  margin: 0.75rem 0 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-left: 1.6rem;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0.1rem;
+      top: 0.45em;
+      width: 0.75rem;
+      height: 0.42rem;
+      border-left: 3px solid color('signal');
+      border-bottom: 3px solid color('signal');
+      transform: rotate(-45deg);
+    }
+  }
+
+  li + li {
+    margin-top: 0.45rem;
+  }
+}
+
+.ticks--columns {
+  @include mq('md') {
+    columns: 2;
+    column-gap: 2.5rem;
+
+    li {
+      break-inside: avoid;
+      margin-bottom: 0.45rem;
+    }
+
+    li + li {
+      margin-top: 0;
+    }
+  }
+}

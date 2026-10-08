@@ -1,0 +1,215 @@
+@use '../abstracts' as *;
+
+// ============================================================
+// The CSCS card fan: the one memorable thing on the home page.
+// Cards are real buttons in a radio group; the chosen card lifts
+// out of the fan and the route underneath updates.
+// ============================================================
+
+.route-planner {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border-radius: $radius-card;
+  background: color('concrete');
+}
+
+.route-planner__prompt {
+  @include display(720);
+  font-size: rem(24);
+}
+
+.card-fan {
+  --card-w: clamp(118px, 34vw, 176px);
+  position: relative;
+  height: calc(var(--card-w) * 0.63 + 64px);
+  margin-top: 0.75rem;
+}
+
+.site-card {
+  --rest: calc((var(--i) - 1.5) * 7deg);
+  position: absolute;
+  bottom: 8px;
+  left: calc(var(--i) * (100% - var(--card-w)) / 3);
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  align-content: start;
+  width: var(--card-w);
+  aspect-ratio: 85.6 / 54;
+  padding: 0.7rem 0.8rem;
+  border: 0;
+  border-radius: $radius-card;
+  color: #fff;
+  text-align: left;
+  transform-origin: 50% 120%;
+  transform: rotate(var(--rest));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.25) inset,
+    0 14px 26px -14px rgba(14, 34, 56, 0.55);
+  cursor: pointer;
+
+  @include motion-ok {
+    transition:
+      transform 420ms $ease-out,
+      left 520ms $ease-out,
+      box-shadow 260ms ease;
+  }
+
+  &:hover {
+    transform: rotate(var(--rest)) translateY(-8px);
+  }
+
+  &[aria-checked='true'] {
+    transform: translateY(-26px) rotate(0deg) scale(1.06);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.25) inset,
+      0 26px 40px -18px rgba(14, 34, 56, 0.7);
+    outline: 3px solid color('ink');
+    outline-offset: 3px;
+  }
+
+  &:focus-visible {
+    outline: 3px solid color('signal');
+    outline-offset: 4px;
+  }
+}
+
+// Before the deal: every card waits in one neat stack in the middle.
+.card-fan:not(.card-fan--dealt) .site-card {
+  left: calc((100% - var(--card-w)) / 2);
+  transform: rotate(0deg);
+}
+
+.site-card--green {
+  background: linear-gradient(150deg, #2a9257, color('card-green'));
+}
+
+.site-card--blue {
+  background: linear-gradient(150deg, #2d6fc2, color('card-blue'));
+}
+
+.site-card--gold {
+  background: linear-gradient(150deg, #e2b13a, color('card-gold'));
+  color: color('ink');
+}
+
+.site-card--black {
+  background: linear-gradient(150deg, #2b2f35, color('card-black'));
+}
+
+.site-card__colour {
+  @include display(820);
+  font-size: calc(var(--card-w) * 0.15);
+  line-height: 1;
+}
+
+// Behind the chosen card only one edge of each card shows, so its name sits on that edge.
+.site-card[data-side='right'] {
+  text-align: right;
+  justify-items: end;
+}
+
+.site-card:not([aria-checked='true']) .site-card__role {
+  visibility: hidden;
+}
+
+.site-card__role {
+  margin-top: 0.15rem;
+  font-size: calc(var(--card-w) * 0.068);
+  font-weight: 600;
+  opacity: 0.92;
+}
+
+.site-card__chip {
+  align-self: end;
+  width: 20%;
+  aspect-ratio: 1.3;
+  border-radius: 4px;
+  background: linear-gradient(135deg, #f3e2a6, #c9a64e 55%, #f0dc9a);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+
+.site-card__stripe {
+  position: absolute;
+  right: 0;
+  bottom: 18%;
+  width: 46%;
+  height: 9%;
+  background: rgba(255, 255, 255, 0.22);
+}
+
+// ---------- the route for the chosen card ----------
+.route {
+  margin-top: 1.25rem;
+}
+
+.route__title {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: rem(30);
+}
+
+.route__for {
+  font-family: $font-sans;
+  font-stretch: 100%;
+  font-size: rem(16);
+  font-weight: 500;
+  color: color('steel');
+}
+
+.route__steps {
+  counter-reset: step;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.route__step {
+  counter-increment: step;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.75rem 0 0.75rem 2.75rem;
+  border-top: 1px solid color('line');
+
+  &::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 0.7rem;
+    display: grid;
+    place-items: center;
+    width: 1.9rem;
+    height: 1.9rem;
+    border-radius: 50%;
+    background: color('ink');
+    color: #fff;
+    @include display(760);
+    font-size: rem(17);
+  }
+}
+
+.route__step-title {
+  font-weight: 650;
+}
+
+.route__step-detail {
+  color: color('steel');
+  font-size: rem(16);
+}
+
+.route__link {
+  font-weight: 650;
+  color: color('ink');
+}
+
+.route__note,
+.route__rules {
+  margin-top: 0.75rem;
+  font-size: rem(14);
+  color: color('steel');
+}
+
+.route-planner--compact .route__step-detail {
+  font-size: rem(15);
+}

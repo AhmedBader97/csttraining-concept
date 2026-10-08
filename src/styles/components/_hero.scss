@@ -1,0 +1,125 @@
+@use '../abstracts' as *;
+
+.hero {
+  padding-block: clamp(2.5rem, 6vw, 5rem) clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.hero__grid {
+  display: grid;
+  gap: 3rem;
+
+  @include mq('lg') {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 4rem;
+  }
+}
+
+.hero__title {
+  max-width: 13ch;
+}
+
+.hero__lede {
+  max-width: 46ch;
+  margin-top: 1.25rem;
+  font-size: rem(20);
+  color: color('steel');
+}
+
+.hero__approvals {
+  margin-top: 1.5rem;
+  font-size: rem(15);
+  color: color('steel');
+}
+
+// ---------- search ----------
+.hero-search {
+  margin-top: 2rem;
+  max-width: 34rem;
+}
+
+.hero-search__form {
+  position: relative;
+}
+
+.hero-search__label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 650;
+}
+
+.hero-search__row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.hero-search__input {
+  flex: 1;
+  min-width: 0;
+  min-height: 52px;
+  padding: 0 1rem;
+  border: 2px solid color('ink');
+  border-radius: $radius-control;
+  background: #fff;
+  font-size: rem(18);
+
+  &::placeholder {
+    color: color('steel');
+  }
+}
+
+.hero-search__button {
+  min-height: 52px;
+}
+
+.hero-search__results {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  padding: 0.35rem;
+  margin: 0;
+  list-style: none;
+  background: #fff;
+  border: 2px solid color('ink');
+  border-radius: $radius-control;
+  box-shadow: 0 18px 40px -18px rgba(14, 34, 56, 0.45);
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.hero-search__result a {
+  display: flex;
+  flex-direction: column;
+  padding: 0.6rem 0.75rem;
+  border-radius: $radius-panel;
+  text-decoration: none;
+}
+
+.hero-search__result[aria-selected='true'] a,
+.hero-search__result a:hover {
+  background: color('concrete');
+}
+
+.hero-search__result-title {
+  font-weight: 650;
+}
+
+.hero-search__result-meta {
+  font-size: rem(14);
+  color: color('steel');
+}
+
+.hero-search__popular {
+  margin-top: 0.75rem;
+  font-size: rem(15);
+  color: color('steel');
+
+  a {
+    color: color('ink');
+  }
+}

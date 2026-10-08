@@ -1,0 +1,17 @@
+@use 'sass:map';
+@use '../abstracts' as *;
+
+:root {
+  @each $name, $value in $colors {
+    --c-#{$name}: #{$value};
+  }
+  // Shorthand used by inline SVGs.
+  --ink: #{map.get($colors, 'ink')};
+  --signal: #{map.get($colors, 'signal')};
+  --card-green: #{map.get($colors, 'card-green')};
+  --card-blue: #{map.get($colors, 'card-blue')};
+  --card-gold: #{map.get($colors, 'card-gold')};
+  --card-black: #{map.get($colors, 'card-black')};
+
+  color-scheme: light;
+}
